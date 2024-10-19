@@ -17,7 +17,7 @@ async def scrape(url):
         product_name = await scrape_name(soup)
         
         if price is None or product_name is None:
-            raise ValueError("Failed to scrape price or product name from the response")
+            print("Failed to scrape price or product name from the response")
         
         return product_name, price
     except Exception as e:
@@ -29,7 +29,7 @@ async def scrape_price(soup):
     try:
         price_element = soup.find("div", {"class": price_class})
         if not price_element:
-            raise ValueError(f"Price element with class '{price_class}' not found in the response")
+            print(f"Price element with class '{price_class}' not found in the response")
         
         price = float(price_element.text.replace("₹", "").replace(",", "").strip())
         return price
@@ -42,7 +42,7 @@ async def scrape_name(soup):
     try:
         name_element = soup.find("span", {"class": product_name_class})
         if not name_element:
-            raise ValueError(f"Product name element with class '{product_name_class}' not found in the response")
+            print(f"Product name element with class '{product_name_class}' not found in the response")
         
         return name_element.text.strip()
     except Exception as e:
